@@ -1,7 +1,8 @@
 from flask import Flask, redirect, url_for
-import sqlite3
+from src import db_scripts
 import os
 import datetime
+
 
 app = Flask(__name__)
 
