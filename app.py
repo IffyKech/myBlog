@@ -58,7 +58,7 @@ def does_file_exist(file_to_find):
 
 def main():
     if not does_file_exist("blog.sqlite3"):
-        db_scripts.create_database()
+        db_scripts.create_blog_database()
 
 
 if __name__ == '__main__':
