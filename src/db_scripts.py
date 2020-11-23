@@ -21,7 +21,7 @@ class Database:
                 self.cursor.execute(query)
                 self.connection.commit()
             except Exception:
-                return Exception
+                raise Exception
         else:
             raise ConnectionError
 
