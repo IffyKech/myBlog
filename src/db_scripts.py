@@ -54,6 +54,7 @@ def create_blog_database():
 
     database.close()
 
+
 def main():
     create_blog_database()
     print("Database Created")
