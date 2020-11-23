@@ -2,6 +2,10 @@ import sqlite3
 
 
 def create_database():
+    """
+    Create the blog's database, if it does not already exist.
+    :return:
+    """
     database = sqlite3.connect("blog.sqlite3")
     database_cursor = database.cursor()
 
