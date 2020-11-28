@@ -3,7 +3,7 @@ from src import db_scripts
 import os
 import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 
 @app.route('/')
@@ -18,29 +18,34 @@ def login_redirect():
     return redirect(url_for('render_login'))
 
 
+@app.route('/static/css/<file>')
+def return_css(file):
+    return app.send_static_file(file)
+
+
 @app.route('/login')
 def render_login():
-    return "Login Page!"
+    return render_template("login.html")
 
 
 @app.route('/index')
 def render_index():
-    return "Hello World!"
+    return render_template("index.html")
 
 
 @app.route('/profile')
 def render_profile():
-    return "Profile Page!"
+    return render_template("profile.html")
 
 
 @app.route('/search')
 def render_search():
-    return "Search Page"
+    return render_template("search.html")
 
 
 @app.route('/comments')
 def render_post():
-    return "Post Page"
+    return render_template("post.html")
 
 
 def does_file_exist(file_to_find):
