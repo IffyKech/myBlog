@@ -1,21 +1,26 @@
-from flask import Flask, redirect, url_for, render_template, jsonify, request
+from flask import Flask, redirect, url_for, render_template, jsonify, request, session
 from src import db_scripts
 import os
 import datetime
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__, static_url_path='')  # create instance of Flask server
+app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for user session
 
 
 @app.route('/')
 def login_redirect():
     """
     Automatically redirect to login page when application is started
+    If the user has logged in recently and has a session, redirect to the homepage instead
     url_for('*arg*')
     *arg*: the function representing the url you want to redirect to
 
     :return:
     """
-    return redirect(url_for('render_login'))
+    if 'username' in session:  # if the user has already logged in and started a session
+        return redirect(url_for('render_index'))  # redirect them to the home page
+    else:
+        return redirect(url_for('render_login'))
 
 
 @app.route('/static/css/<file>')
@@ -26,6 +31,31 @@ def return_css(file):
 @app.route('/login')
 def render_login():
     return render_template("login.html")
+
+
+
+@app.route('/login', methods=["POST"])
+def authenticate_user_login():
+    """
+    This is the route for when a user fills a form and attempts a login.
+    The POST method is used so the ajax call can post the details written in the forms
+    The function gets the query string arguments and compares them with rows in the database to find a user match
+    :return:
+    """
+    user_name = request.args["username"]
+    password = request.args["password"]
+
+    database = db_scripts.Database("blog.sqlite3")  # initialize database connection
+    query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
+    database.execute_query(query)
+    results = database.cursor.fetchall()  # stores the results of the query in an array
+
+    if len(results > 0):  # if there was a match found and returned to the array
+        print(results)
+        database.close()  # close the database connection
+
+    else:
+        return "<p>No records Found</p>"
 
 
 @app.route('/index')
@@ -68,4 +98,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    app.run()
+    app.run(debug=True)
