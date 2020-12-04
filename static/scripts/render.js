@@ -10,7 +10,7 @@ function createUser(){
     if (request.readyState === 4 && request.status === 200){
         var json = JSON.parse(request.responseText);
     }
-    data = JSON.stringify({"username": RegName, "password": RegPass});
+    data = JSON.stringify({"username": username, "password": password});
     request.send();
     return false;
 }
