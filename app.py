@@ -34,30 +34,30 @@ def render_login():
     return render_template("login.html")
 
 
-# LOGIN USER
-@app.route('/login', methods=["POST"])
-def authenticate_user_login():
-    """
-    This is the route for when a user fills a form and attempts a login.
-    The POST method is used so the ajax call can post the details written in the forms
-    The function gets the query string arguments and compares them with rows in the database to find a user match
-    :return:
-    """
-    print("Login ran")
-    user_name = request.args["username"]
-    password = request.args["password"]
-
-    database = db_scripts.Database("blog.sqlite3")  # initialize database connection
-    query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
-    database.execute_query(query)
-    results = database.cursor.fetchall()  # stores the results of the query in an array
-
-    if len(results > 0):  # if there was a match found and returned to the array
-        print(results)
-        database.close()  # close the database connection
-
-    else:
-        return "<p>No records Found</p>"
+# # LOGIN USER
+# @app.route('/login', methods=["POST"])
+# def authenticate_user_login():
+#     """
+#     This is the route for when a user fills a form and attempts a login.
+#     The POST method is used so the ajax call can post the details written in the forms
+#     The function gets the query string arguments and compares them with rows in the database to find a user match
+#     :return:
+#     """
+#     print("Login ran")
+#     user_name = request.args["username"]
+#     password = request.args["password"]
+#
+#     database = db_scripts.Database("blog.sqlite3")  # initialize database connection
+#     query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
+#     database.execute_query(query)
+#     results = database.cursor.fetchall()  # stores the results of the query in an array
+#
+#     if len(results > 0):  # if there was a match found and returned to the array
+#         print(results)
+#         database.close()  # close the database connection
+#
+#     else:
+#         return "<p>No records Found</p>"
 
 
 # CREATE USER
@@ -68,14 +68,13 @@ def create_new_user():
     password = request.args["password"]
     repeat_password = request.args["repeat_password"]
 
-    if len(user_name < 1 or len(password) < 1 or len(repeat_password) < 1):  # if any of the fields are empty
+    if len(user_name) < 1 or len(password) < 1 or len(repeat_password) < 1:  # if any of the fields are empty
         return "404 Please enter both a username and password"
 
     else:
         if repeat_password == password:  # if the user entered the same password correctly
             database = db_scripts.Database("blog.sqlite3")
             """ Check to see if the username already exists """
-            username_exists = False
             find_username_query = "SELECT username FROM userInfo"
             database.execute_query(find_username_query)
             results = database.cursor.fetchall()  # fetch all the rows into an array
@@ -84,9 +83,12 @@ def create_new_user():
                 if user_name in row:
                     return "200 User Already exists"  # exit
             """ No matches were found. """
-            create_query = """INSERT INTO userInfo(username, userpassword) VALUES(?, ?) """, (user_name, password)
-            database.execute_query(create_query)
+            create_query = "INSERT INTO userInfo(username, userpassword) VALUES(?, ?)"
+            print(create_query)
+            database.cursor.execute(create_query, (user_name, password))
+            database.connection.commit()
             database.close()
+            print("Acc Created")
             return "200 Account Created!"
 
 
