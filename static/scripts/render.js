@@ -21,8 +21,7 @@ function createUser() {
                 }
             }
 
-            xmlhttp.open("POST", "http://127.0.0.1:5000/login?username=" +username.toString()+ "&password=" +password.toString()+
-                "&repeat_password=" +repeat_password.toString());
+            xmlhttp.open("POST", "http://127.0.0.1:5000/login?username=" +username.toString()+ "&password=" +password.toString());
             xmlhttp.send();
         }
     }
