@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, jsonify, request, session
+from flask import Flask, redirect, url_for, render_template, jsonify, request, session, abort
 from src import db_scripts
 import os
 import datetime
@@ -66,7 +66,6 @@ def create_new_user():
     print("Register ran")
     user_name = request.args["username"]
     password = request.args["password"]
-    repeat_password = request.args["repeat_password"]
     database = db_scripts.Database("blog.sqlite3")
 
     """ Check to see if the username already exists """
@@ -77,14 +76,14 @@ def create_new_user():
     """ Compare user_name input to usernames in the database. If there's a match, exit. """
     for row in results:  # iterate over each result
         if user_name in row:
-            return "200 User Already exists"  # exit
+            abort(500)  # exit with status code 500
+
     """ No matches were found. """
     create_query = "INSERT INTO userInfo(username, userpassword) VALUES(?, ?)"
-    print(create_query)
     database.cursor.execute(create_query, (user_name, password))
-    database.connection.commit()
+    database.connection.commit()  # save the database changes
     database.close()
-    print("Acc Created")
+
     return "200 Account Created!"
 
 
