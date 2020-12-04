@@ -42,6 +42,7 @@ def authenticate_user_login():
     The function gets the query string arguments and compares them with rows in the database to find a user match
     :return:
     """
+    print("Login ran")
     user_name = request.args["username"]
     password = request.args["password"]
 
@@ -61,6 +62,7 @@ def authenticate_user_login():
 # CREATE USER
 @app.route('/login', methods=["POST"])
 def create_new_user():
+    print("Register ran")
     user_name = request.args["username"]
     password = request.args["password"]
     repeat_password = request.args["repeat_password"]
@@ -83,6 +85,7 @@ def create_new_user():
             """ No matches were found. """
             create_query = """INSERT INTO userInfo(username, userpassword) VALUES(?, ?) """, (user_name, password)
             database.execute_query(create_query)
+            database.close()
             return "200 Account Created!"
 
 
