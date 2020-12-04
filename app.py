@@ -5,6 +5,7 @@ import datetime
 
 app = Flask(__name__, static_url_path='')  # create instance of Flask server
 app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for user session
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1  # set cache refresh to every 1 second
 
 
 @app.route('/')
