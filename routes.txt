@@ -1,0 +1,4 @@
+CREATE USER ["POST"]
+http://127.0.0.1:5000/login?username=""&password=""&repeat_password=""
+LOGIN USER ["POST"]
+http://127.0.0.1:5000/login?username=""&password=""
