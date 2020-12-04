@@ -33,7 +33,7 @@ def render_login():
     return render_template("login.html")
 
 
-
+# LOGIN USER
 @app.route('/login', methods=["POST"])
 def authenticate_user_login():
     """
@@ -56,6 +56,31 @@ def authenticate_user_login():
 
     else:
         return "<p>No records Found</p>"
+
+# CREATE USER
+@app.route('/login', methods=["POST"])
+def create_new_user():
+    user_name = request.args["username"]
+    password = request.args["password"]
+    repeat_password = request.args["repeat_password"]
+
+    if len(user_name < 1 or len(password) < 1 or len(repeat_password) < 1):  # if any of the fields are empty
+        return "200 Please enter both a username and password"
+
+    else:
+        if repeat_password == password:  # if the user entered the same password correctly
+            database = db_scripts.Database("blog.sqlite3")
+            """ Check to see if the username already exists """
+            username_exists = False
+            find_username_query = "SELECT username FROM userInfo"
+            database.execute_query(find_username_query)
+            results = database.cursor.fetchall()  # fetch all the rows into an array
+            """ Compare user_name input to usernames in the database. If there's a match, exit. """
+            for row in results:  # iterate over each result
+                if user_name in row:
+                    return "200 User Already exists"  # exit
+            """ No matches were found. """
+            create_query = "INSERT INTO userInfo"
 
 
 @app.route('/index')
