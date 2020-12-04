@@ -57,6 +57,7 @@ def authenticate_user_login():
     else:
         return "<p>No records Found</p>"
 
+
 # CREATE USER
 @app.route('/login', methods=["POST"])
 def create_new_user():
@@ -65,7 +66,7 @@ def create_new_user():
     repeat_password = request.args["repeat_password"]
 
     if len(user_name < 1 or len(password) < 1 or len(repeat_password) < 1):  # if any of the fields are empty
-        return "200 Please enter both a username and password"
+        return "404 Please enter both a username and password"
 
     else:
         if repeat_password == password:  # if the user entered the same password correctly
@@ -80,7 +81,9 @@ def create_new_user():
                 if user_name in row:
                     return "200 User Already exists"  # exit
             """ No matches were found. """
-            create_query = "INSERT INTO userInfo"
+            create_query = """INSERT INTO userInfo(username, userpassword) VALUES(?, ?) """, (user_name, password)
+            database.execute_query(create_query)
+            return "200 Account Created!"
 
 
 @app.route('/index')
