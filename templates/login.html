@@ -17,6 +17,8 @@ Released   : 20090910
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Indication by TEMPLATED</title>
 <link href="../static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+    <script src="{{ url_for('static', filename='../scripts/render.js') }}" type="text/javascript" defer></script>
+
 </head>
 <body>
 <div id="wrapper">
@@ -39,7 +41,7 @@ Released   : 20090910
 	<div id="page-bgbtm">
 		<div id="content">
 			<div class="container">
-  <form action="/action_page.php">
+  <form>
     <div class="row">
       <h2 style="text-align:center">Register or Login</h2>
       <div class="vl">
@@ -48,22 +50,22 @@ Released   : 20090910
 
       <div class="col">
 	  <!-- Register -->
-        <form action="action_page.php" style="border:1px solid #ccc">
+        <form style="border:1px solid #ccc">
   <div class="container">
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
 
     <label for="email"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="UserName" required>
+    <input type="text" id="registerUsername" placeholder="Enter Username" name="UserName" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" id="registerPassword" placeholder="Enter Password" name="psw" required>
 
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="password" id="registerRepeat" placeholder="Repeat Password" name="psw-repeat" required>
     <div class="clearfix">
-      <button type="submit" class="signupbtn">Sign Up</button>
+      <button type="button" id="registerButton" class="signupbtn">Sign Up</button>
     </div>
   </div>
 </form>
@@ -75,8 +77,8 @@ Released   : 20090910
           <p>Or sign in manually:</p>
         </div>
 
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="username" placeholder="Username" >
+        <input type="password" name="password" placeholder="Password" >
         <input type="submit" value="Login">
       </div>
 
