@@ -20,8 +20,8 @@ def login_redirect():
     """
     if 'username' in session:  # if the user has already logged in and started a session
         return redirect(url_for('render_index'))  # redirect them to the home page
-    else:
-        return redirect(url_for('render_login'))
+    else:  # if the user has not yet logged in
+        return redirect(url_for('render_login'))  # redirect them to the login page
 
 
 @app.route('/static/css/<file>')
@@ -83,7 +83,8 @@ def create_new_user():
     database.connection.commit()  # save the database changes
     database.close()
 
-    return "200 Account Created!"
+    session['username'] = user_name  # set the session variable to the newly created username
+    return redirect(url_for('login_redirect'))  # redirect them to the route which redirects to homepage
 
 
 @app.route('/index')
