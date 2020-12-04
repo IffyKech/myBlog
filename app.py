@@ -63,7 +63,6 @@ def render_login():
 # CREATE USER
 @app.route('/login', methods=["POST"])
 def create_new_user():
-    print("Register ran")
     user_name = request.args["username"]
     password = request.args["password"]
     database = db_scripts.Database("blog.sqlite3")
