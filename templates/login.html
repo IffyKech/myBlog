@@ -17,6 +17,8 @@ Released   : 20090910
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Indication by TEMPLATED</title>
 <link href="../static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+    <script src="{{ url_for('static', filename='../scripts/render.js') }}" type="text/javascript" defer></script>
+
 </head>
 <body>
 <div id="wrapper">
@@ -55,15 +57,15 @@ Released   : 20090910
     <hr>
 
     <label for="email"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="UserName" required>
+    <input type="text" id="registerUsername" placeholder="Enter Username" name="UserName" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" id="registerPassword" placeholder="Enter Password" name="psw" required>
 
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="password" id="registerRepeat" placeholder="Repeat Password" name="psw-repeat" required>
     <div class="clearfix">
-      <button type="submit" class="signupbtn">Sign Up</button>
+      <button type="submit" id="registerButton" class="signupbtn">Sign Up</button>
     </div>
   </div>
 </form>
