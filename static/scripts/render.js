@@ -15,6 +15,13 @@ function createUser() {
         else { // if the user re-entered the correct password
             let xmlhttp = new XMLHttpRequest();
 
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    window.location("/index");
+                }
+            }
+
+
             xmlhttp.open("POST", "http://127.0.0.1:5000/login?username=" +username.toString()+ "&password=" +password.toString());
             xmlhttp.send();
         }
