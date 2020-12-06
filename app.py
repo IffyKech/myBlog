@@ -39,7 +39,7 @@ def render_login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)  # destroy the session
-    return redirect(url_for(render_login))  # redirect the user to the login page
+    return redirect(url_for('render_login'))  # redirect the user to the login page
 
 
 # # LOGIN USER
