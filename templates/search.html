@@ -1,52 +1,55 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!--
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-
-Name       : Indication  
-Description: A two-column, fixed-width design with dark color scheme.
-Version    : 1.0
-Released   : 20090910
-
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Indication by TEMPLATED</title>
-<link href="../static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+<title>myBlog - Search Results</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
 <div id="wrapper">
 	<div id="header">
 		<div id="logo">
-			<h1><a href="#">Indication   </a></h1>
-			<p> design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a></p>
+			<h1><a href="#">MyBlog</a></h1>
 		</div>
 	</div>
 	<!-- end #header -->
 	<div id="menu">
 		<ul>
 			<li class="current_page_item"><a href="#">Home</a></li>
-			<li><a href="#">Profile</a></li>
+			<li><a href="#profile">Profile</a></li>
+			<li><a href="#loginRegister">Log Out</li>
 		</ul>
 	</div>
 	<!-- end #menu -->
 	<div id="page">
-	    <div id="page-bgtop">
-	        <div id="page-bgbtm">
-		        <div id="content">
-			
-			    </div>
-		    <div style="clear: both;">&nbsp;</div>
+	<div id="page-bgtop">
+	<div id="page-bgbtm">
+		<div id="content">
+			<h2 class="title"><a href="#">Search Results</a></h2>
+				
 		</div>
 		<!-- end #content -->
-		
+		<div id="sidebar">
+			<ul>
+				<li>
+					<div id="search" >
+					<form method="get" action="#">
+						<div>
+							<h1>Search<h1>
+							<input type="text" name="s" id="search-text" value="" />
+							<input type="submit" id="search-submit" value="GO" />
+						</div>
+					</form>
+					</div>
+					
+			</ul>
+		</div>
+		<!-- end #sidebar -->
 		<div style="clear: both;">&nbsp;</div>
-	        </div>
-	    </div>
+	</div>
+	</div>
 	</div>
 	<!-- end #page -->
 </div>
