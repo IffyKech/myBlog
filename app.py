@@ -55,11 +55,11 @@ def authenticate_user_login():
     password = request.args["password"]
 
     database = db_scripts.Database("blog.sqlite3")  # initialize database connection
-    query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
-    database.execute_query(query)
+    query = "SELECT userid FROM userInfo WHERE username=? AND userpassword=?" # search for users with the
+    database.cursor.execute(query, (user_name, password))
     results = database.cursor.fetchall()  # stores the results of the query in an array
 
-    if len(results > 0):  # if there was a match found and returned to the array
+    if len(results) > 0:  # if there was a match found and returned to the array
         database.close()  # close the database connection
         session["username"] = user_name  # set the username session to the user found
         return redirect(url_for("render_index"))  # redirect to the homepage

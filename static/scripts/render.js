@@ -30,8 +30,8 @@ function createUser() {
 }
 
 function loginUser() {
-    let username = document.getElementById("loginUsername");
-    let password = document.getElementById("loginPassword");
+    let username = document.getElementById("loginUsername").value;
+    let password = document.getElementById("loginPassword").value;
 
     if ( username.length < 1 || password.length < 1) {
         alert("Please enter a value in all fields");
@@ -39,6 +39,13 @@ function loginUser() {
 
     else {
         let xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                window.location.href = "http://127.0.0.1:5000/home";
+            }
+        }
+
         xmlhttp.open("POST", "http://127.0.0.1:5000/login/user?username=" +username.toString()+ "&password=" +password.toString());
         xmlhttp.send();
     }
