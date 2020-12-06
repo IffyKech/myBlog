@@ -36,6 +36,12 @@ def render_login():
     return render_template("login.html")
 
 
+@app.route('/logout')
+def logout():
+    session.pop('username', None)  # destroy the session
+    return redirect(url_for(render_login))  # redirect the user to the login page
+
+
 # # LOGIN USER
 # @app.route('/login', methods=["POST"])
 # def authenticate_user_login():
