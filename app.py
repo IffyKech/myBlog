@@ -7,8 +7,8 @@ app = Flask(__name__, static_url_path='')  # create instance of Flask server
 app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for user session
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1  # set cache refresh to every 1 second
 
-# TODO: GET A LOGOUT FUNCTION, THE FUNCTION SHOULD RECREATE THE SESSIONS DICTIONARY AND THEN REDIRECT TO LOGIN PAGE
-# TODO: CURRENTLY, SESSION['username'] = Iffy, BECAUSE OF THIS I AUTOMATICALLY LOGIN TO WEBSITE EVEN THOUGH I DELETED IFFY FROM DB
+# TODO: plan out sessions so that each page redirects to login page if session doesn't exist
+# TODO: Add webbrowser functionality when app is loaded
 
 @app.route('/')
 def login_redirect():
