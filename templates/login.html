@@ -6,7 +6,8 @@
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>myBlog - Login</title>
-<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+<script src="{{ url_for('static', filename='../scripts/render.js') }}" type="text/javascript" defer></script>
 </head>
 <body>
 <div id="wrapper">
@@ -29,26 +30,26 @@
 	<div id="page-bgbtm">
 		<div id="content">
 			<div class="container">
-  <form action="/action_page.php">
+  <form>
     <div class="row">
       <h2 style="text-align:center">Register or Login</h2>
 
       <div class="col">
 	  <!-- Register -->
-        <form action="action_page.php" style="border:1px solid #ccc">
+        <form style="border:1px solid #ccc">
 			<div class="container">
 					<p>Please fill in this form to create an account.</p>
 				<hr>
 
-				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Enter Email" name="email" required>
+				<label for="registerUsername"><b>Username</b></label>
+				<input type="text" id="registerUsername" placeholder="Enter Username" name="username">
 
-				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" required>
+				<label for="registerPassword"><b>Password</b></label>
+				<input type="password" id="registerPassword" placeholder="Enter Password" name="psw">
 				
 				
-				<label for="psw-repeat"><b>Repeat Password</b></label>
-				<input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+				<label for="registerRepeat"><b>Repeat Password</b></label>
+				<input type="password" id="registerRepeat" placeholder="Repeat Password" name="psw-repeat">
 
 				<label>
 				  <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -71,8 +72,8 @@
           <p>Or sign in manually:</p>
         </div>
 
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
         <input type="submit" value="Login">
       </div>
 
@@ -100,9 +101,6 @@
 	</div>
 	<!-- end #page -->
 </div>
-	<div id="footer">
-		<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
-	</div>
 	<!-- end #footer -->
 </body>
 </html>
