@@ -39,7 +39,7 @@ function loginUser() {
 
     else {
         let xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "http://127.0.0.1:5000/login/user?username=" +username.toString()+ "&pasword=" +password.toString());
+        xmlhttp.open("POST", "http://127.0.0.1:5000/login/user?username=" +username.toString()+ "&password=" +password.toString());
         xmlhttp.send();
     }
 }
