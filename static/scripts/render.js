@@ -19,6 +19,11 @@ function createUser() {
                 if (this.readyState === 4 && this.status === 200) {
                     window.location.href = "http://127.0.0.1:5000/home";
                 }
+
+                else if (this.readyState === 4 && this.status === 500) {
+                    alert("Username already exists." +
+                        "Please Try another username");
+                }
             }
 
 
@@ -44,6 +49,11 @@ function loginUser() {
             if (this.readyState === 4 && this.status === 200) {
                 window.location.href = "http://127.0.0.1:5000/home";
             }
+
+            else if (this.readyState === 4 && this.status === 500) {
+                alert("User Credentials Not Found");
+            }
+
         }
 
         xmlhttp.open("POST", "http://127.0.0.1:5000/login/user?username=" +username.toString()+ "&password=" +password.toString());
