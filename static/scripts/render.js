@@ -9,7 +9,7 @@ function createUser() {
 
     else { // if a value has been entered in every field
         if (repeat_password !== password) { // if the user did not re-enter the correct password
-            alert("Both Passwords did not match.<br>Please Try again.");
+            alert("Both Passwords did not match. Please Try again.");
         }
 
         else { // if the user re-entered the correct password
@@ -29,5 +29,23 @@ function createUser() {
 
 }
 
+function loginUser() {
+    let username = document.getElementById("loginUsername");
+    let password = document.getElementById("loginPassword");
+
+    if ( username.length < 1 || password.length < 1) {
+        alert("Please enter a value in all fields");
+    }
+
+    else {
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "http://127.0.0.1:5000/login/user?username=" +username.toString()+ "&pasword=" +password.toString());
+        xmlhttp.send();
+    }
+}
+
 let createUserButton = document.getElementById("registerButton");
 createUserButton.addEventListener("click", function () {createUser()});
+
+let loginUserButton = document.getElementById("loginButton");
+loginUserButton.addEventListener("click", function () {loginUser()});

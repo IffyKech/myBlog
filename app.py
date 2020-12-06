@@ -42,30 +42,31 @@ def logout():
     return redirect(url_for('render_login'))  # redirect the user to the login page
 
 
-# # LOGIN USER
-# @app.route('/login', methods=["POST"])
-# def authenticate_user_login():
-#     """
-#     This is the route for when a user fills a form and attempts a login.
-#     The POST method is used so the ajax call can post the details written in the forms
-#     The function gets the query string arguments and compares them with rows in the database to find a user match
-#     :return:
-#     """
-#     print("Login ran")
-#     user_name = request.args["username"]
-#     password = request.args["password"]
-#
-#     database = db_scripts.Database("blog.sqlite3")  # initialize database connection
-#     query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
-#     database.execute_query(query)
-#     results = database.cursor.fetchall()  # stores the results of the query in an array
-#
-#     if len(results > 0):  # if there was a match found and returned to the array
-#         print(results)
-#         database.close()  # close the database connection
-#
-#     else:
-#         return "<p>No records Found</p>"
+# LOGIN USER
+@app.route('/login/user', methods=["POST"])
+def authenticate_user_login():
+    """
+    This is the route for when a user fills a form and attempts a login.
+    The POST method is used so the ajax call can post the details written in the forms
+    The function gets the query string arguments and compares them with rows in the database to find a user match
+    :return:
+    """
+    user_name = request.args["username"]
+    password = request.args["password"]
+
+    database = db_scripts.Database("blog.sqlite3")  # initialize database connection
+    query = """SELECT userid FROM userInfo WHERE username=? AND userpassword=?""", (user_name, password)  # search for users with the
+    database.execute_query(query)
+    results = database.cursor.fetchall()  # stores the results of the query in an array
+
+    if len(results > 0):  # if there was a match found and returned to the array
+        database.close()  # close the database connection
+        session["username"] = user_name  # set the username session to the user found
+        return redirect(url_for("render_index"))  # redirect to the homepage
+
+    else:
+        database.close()
+        abort(500)
 
 
 # CREATE USER
