@@ -2,13 +2,15 @@ from flask import Flask, redirect, url_for, render_template, jsonify, request, s
 from src import db_scripts
 import os
 import datetime
+import webbrowser
 
 app = Flask(__name__, static_url_path='')  # create instance of Flask server
 app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for user session
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1  # set cache refresh to every 1 second
 
+
 # TODO: plan out sessions so that each page redirects to login page if session doesn't exist
-# TODO: Add webbrowser functionality when app is loaded
+
 
 @app.route('/')
 def login_redirect():
@@ -55,7 +57,7 @@ def authenticate_user_login():
     password = request.args["password"]
 
     database = db_scripts.Database("blog.sqlite3")  # initialize database connection
-    query = "SELECT userid FROM userInfo WHERE username=? AND userpassword=?" # search for users with the
+    query = "SELECT userid FROM userInfo WHERE username=? AND userpassword=?"  # search for users with the
     database.cursor.execute(query, (user_name, password))
     results = database.cursor.fetchall()  # stores the results of the query in an array
 
@@ -133,8 +135,9 @@ def does_file_exist(file_to_find):
 def main():
     if not does_file_exist("blog.sqlite3"):
         db_scripts.create_blog_database()
+    webbrowser.open("http://127.0.0.1:5000/")  # open the website page automatically
 
 
 if __name__ == '__main__':
     main()
-    app.run(debug=True)
+    app.run()
