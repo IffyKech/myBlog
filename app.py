@@ -92,7 +92,7 @@ def create_new_user():
     database.close()
 
     session['username'] = user_name  # set the session variable to the newly created username
-    return redirect(url_for('login_redirect'))  # redirect them to the route which redirects to homepage
+    return redirect(url_for('render_index'))  # redirect them to the route which redirects to homepage
 
 
 @app.route('/index')
