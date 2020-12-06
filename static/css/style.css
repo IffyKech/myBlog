@@ -1,9 +1,5 @@
 
-/*
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-*/
+/* Base Template Start*/
 
 body {
 	margin: 0;
@@ -388,6 +384,8 @@ a:hover {
 }
 
 * {box-sizing: border-box}
+
+/* Basic Template Ends */
 
 /* style the container */
 .container {
