@@ -100,21 +100,29 @@ def create_new_user():
 
 @app.route('/home')
 def render_index():
+    if 'username' not in session:  # if there hasn't been a session created (no login yet)
+        return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("index.html")
 
 
 @app.route('/profile')
 def render_profile():
+    if 'username' not in session:  # if there hasn't been a session created (no login yet)
+        return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("profile.html")
 
 
 @app.route('/search')
 def render_search():
+    if 'username' not in session:  # if there hasn't been a session created (no login yet)
+        return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("search.html")
 
 
 @app.route('/comments')
 def render_post():
+    if 'username' not in session:  # if there hasn't been a session created (no login yet)
+        return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("post.html")
 
 
