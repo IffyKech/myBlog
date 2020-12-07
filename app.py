@@ -95,7 +95,6 @@ def create_new_user():
     database.close()
 
     session['username'] = user_name  # set the session variable to the newly created username
-    print(session)
     return redirect(url_for('login_redirect'))  # redirect them to the home page
 
 
