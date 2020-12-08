@@ -9,6 +9,8 @@ for (let repeat = 0; repeat < amountOfResults; repeat++) {
     resultPostID = results[repeat][0];
     resultPostTitle = results[repeat][1];
     resultPostDate = results[repeat][2];
+    resultUserID = results[repeat][3];
+    resultUsername = results[repeat][4];
 
     /* Create the new HTML elements for the posts */
     /* POST TITLE */
@@ -17,13 +19,13 @@ for (let repeat = 0; repeat < amountOfResults; repeat++) {
 
     var postTitle = document.createElement("h2");
     postTitle.className = "title";
-    postTitle.innerHTML = `<a href="#">${resultPostTitle}</a>`;
+    postTitle.innerHTML = `<a href="http://127.0.0.1:5000/comments?id=${resultPostID}">${resultPostTitle}</a>`;
 
     /* POST DATE */
     var postDate = document.createElement("p");
     postDate.className = "meta";
     // TODO: replace the post id with the tag
-    postDate.innerHTML = `<span class="date">${resultPostDate}</span><span class="posted">Post ID: ${resultPostID}</a>`;
+    postDate.innerHTML = `<span class="date">${resultPostDate}</span><span class="posted">Posted by: ${resultUsername}</a>`;
 
     /* WHITESPACE DIV */
     var whitespaceDiv = document.createElement("div");
@@ -35,7 +37,7 @@ for (let repeat = 0; repeat < amountOfResults; repeat++) {
 
     var linksParagraph = document.createElement("p");
     linksParagraph.className = "links";
-    linksParagraph.innerHTML = "<a href='#'>Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href='#'>Comments</a>";
+    linksParagraph.innerHTML = "<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Comments</a>";
 
     /* append parent nodes to create html structure */
     content_div.appendChild(postDiv);
