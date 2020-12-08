@@ -1,6 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, jsonify, request, session, abort
 from src import db_scripts
-import json
 import os
 import datetime
 import webbrowser
@@ -8,6 +7,9 @@ import webbrowser
 app = Flask(__name__, static_url_path='')  # create instance of Flask server
 app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for user session
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1  # set cache refresh to every 1 second
+
+
+# TODO: plan out sessions so that each page redirects to login page if session doesn't exist
 
 
 @app.route('/')
@@ -96,11 +98,20 @@ def create_new_user():
     return redirect(url_for('login_redirect'))  # redirect them to the home page
 
 
-@app.route('/home')
+@app.route('/home', methods=['GET'])
 def render_index():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
-    return render_template("index.html")
+    else:
+        database = db_scripts.Database("blog.sqlite3")  # creates a connection to the website's database
+        fetch_query = 'SELECT title, postContent, postDate FROM postInfo ORDER BY postDate DESC '  # variable stores the sql function that needs to be executed
+        fetched_posts = database.cursor.execute(fetch_query).fetchall()  # cursor executes the function and gets all results returned by the function
+        data_dictionary = {}
+        for count in range(len(fetched_posts)):
+            data_dictionary[str(count) + '_title'] = fetched_posts[count][0]
+            data_dictionary[str(count) + '_contents'] = fetched_posts[count][1]
+            data_dictionary[str(count) + '_date'] = fetched_posts[count][2]
+    return render_template("index.html", fetched_posts=fetched_posts, data_dictionary=data_dictionary)
 
 
 @app.route('/profile')
@@ -115,18 +126,6 @@ def render_search():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("search.html")
-
-
-@app.route('/search', methods=['POST'])
-def return_searched_post():
-    tag_being_searched_for = request.form['s']  # get the value of the search bar input
-    select_posts_query = "SELECT postid, title, postdate FROM postInfo WHERE (SELECT tag FROM tag) LIKE  ?"  # select all posts that
-    # matched the tag being searched for
-    database = db_scripts.Database("blog.sqlite3")  # initialize the database connection
-    database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
-    query_results = database.cursor.fetchall()  # get the results in a list of tuples
-    database.close()
-    return render_template("search.html", json_results=query_results)
 
 
 @app.route('/comments')
