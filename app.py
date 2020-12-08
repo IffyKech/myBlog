@@ -125,7 +125,6 @@ def return_searched_post():
     database = db_scripts.Database("blog.sqlite3")  # initialize the database connection
     database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
     query_results = database.cursor.fetchall()  # get the results in a list of tuples
-    json_results = json.dumps(query_results)  # convert the list to a json format
     database.close()
     return render_template("search.html", json_results=query_results)
 
