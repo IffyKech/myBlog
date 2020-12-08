@@ -1,4 +1,5 @@
-let amountOfResults = results.length;
+var results = json_results;
+var amountOfResults = results.length;
 /*
 Repeat the process of creating html for the posts, for as many posts as there are
  */
