@@ -37,7 +37,7 @@ Repeat the process of creating html for the posts, for as many posts as there ar
 
         var linksParagraph = document.createElement("p");
         linksParagraph.className = "links";
-        linksParagraph.innerHTML = "<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Comments</a>";
+        linksParagraph.innerHTML = `<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://127.0.0.1:5000/comments?id=${resultPostID}'>Comments</a>`;
 
         /* append parent nodes to create html structure */
         contentDiv.appendChild(postDiv);
