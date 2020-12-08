@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, jsonify, request, session, abort
 from src import db_scripts
+import json
 import os
 import datetime
 import webbrowser
@@ -126,6 +127,18 @@ def render_search():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
     return render_template("search.html")
+
+
+@app.route('/search', methods=['POST'])
+def return_searched_post():
+    tag_being_searched_for = request.form['s']  # get the value of the search bar input
+    select_posts_query = "SELECT postid, title, postdate FROM postInfo WHERE (SELECT tag FROM tag) LIKE  ?"  # select all posts that
+    # matched the tag being searched for
+    database = db_scripts.Database("blog.sqlite3")  # initialize the database connection
+    database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
+    query_results = database.cursor.fetchall()  # get the results in a list of tuples
+    database.close()
+    return render_template("search.html", json_results=query_results)
 
 
 @app.route('/comments')
