@@ -6,6 +6,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>MyBlog - Home</title>
 	<link href="{{ url_for('static', filename='../css/style.css') }}" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ url_for('static', filename='../scripts/homepage.js') }}"  type="text/javascript"/>
 </head>
 <body>
 <div id="wrapper">
@@ -37,26 +38,17 @@
 					<p class="links"><a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
 				</div>
 			</div>
-			<div class="post">
-				<h2 class="title">{{ data_dictionary['0_title'] }}</h2>
-				<p class="meta"><span class="date">{{ data_dictionary['0_date'] }}</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
-				<div style="clear: both;">&nbsp;</div>
-				<div class="entry">
-					<p>{{ fetched_content }}</p>
-					<p class="links"><a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
-				</div>
-			</div>
-			<div class="post">
-				<h2 class="title">{{ data_dictionary['1_title'] }}</h2>
-				<p class="meta"><span class="date">{{ data_dictionary['1_date'] }}</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
-				<div style="clear: both;">&nbsp;</div>
-				<div class="entry">
-					<p>{{ fetched_content }}</p>
-					<p class="links"><a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
-				</div>
-			</div>
-		<div style="clear: both;">&nbsp;</div>
-		</div>
+            {% for i in fetched_posts %}
+			    <div class="post">
+				    <h2 class="title">{{ i[1] }}</h2>
+				    <p class="meta"><span class="date">{{ i[2] }}</span><span class="posted">Posted by <a href="#">{{ i[4] }}</a></span></p>
+				    <div style="clear: both;">&nbsp;</div>
+				    <div class="entry">
+					<p class="links">{{ i[5] }} <a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
+				    </div>
+			    </div>
+            {% endfor %}
+
 		<!-- end #content -->
 		<div id="sidebar">
 			<ul>
