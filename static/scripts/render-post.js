@@ -1,2 +1,4 @@
-var results = json_results;
-console.log(results);
+var postResults = jsonPostResults;
+var commentResults = jsonCommentResults;
+console.log(postResults);
+console.log(commentResults);
