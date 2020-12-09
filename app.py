@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, jsonify, request, session, abort
+from flask import Flask, redirect, url_for, render_template, jsonify, request, session, abort, Response
 from src import db_scripts
 import json
 import os
@@ -125,6 +125,29 @@ def render_profile():
     current_username = session["username"]  # get the currently logged in user's username
 
     return render_template("profile.html", username=current_username)
+
+
+@app.route('/profile', methods=['POST'])
+def change_password():
+    username = session["username"]
+    current_password = request.args["pwd"]
+    new_password = request.args["new_pwd"]
+
+    """Check to see if the username's password is valid"""
+    validate_password_query = "SELECT userid from userInfo WHERE username=? AND userpassword=?"
+    database = db_scripts.Database("blog.sqlite3")
+    database.cursor.execute(validate_password_query, (username, current_password))
+    result = database.cursor.fetchall()
+
+    if len(result) > 0:  # if a result was found
+        update_password_query = "UPDATE userInfo SET userpassword=? WHERE username=?"
+        database.cursor.execute(update_password_query, (new_password, username))
+        database.connection.commit()  # save the changes
+        database.close()
+        return Response("{'a':'b'}", status=200, mimetype='application/json')
+    else:
+        database.close()
+        abort(500)
 
 
 @app.route('/search')
