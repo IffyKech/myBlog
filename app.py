@@ -121,7 +121,10 @@ def render_index():
 def render_profile():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
-    return render_template("profile.html")
+
+    current_username = session["username"]  # get the currently logged in user's username
+
+    return render_template("profile.html", username=current_username)
 
 
 @app.route('/search')
