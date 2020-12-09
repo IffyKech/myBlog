@@ -105,16 +105,11 @@ def render_index():
         return redirect(url_for('render_login'))  # redirect the user to login
     else:
         database = db_scripts.Database("blog.sqlite3")  # creates a connection to the website's database
-        fetch_query = 'SELECT title, postContent, postDate FROM postInfo ORDER BY postDate DESC '  # variable stores
-        # the sql function that needs to be executed
-        fetched_posts = database.cursor.execute(fetch_query).fetchall()  # cursor executes the function and gets all
-        # results returned by the function
-        data_dictionary = {}
-        for count in range(len(fetched_posts)):
-            data_dictionary[str(count) + '_title'] = fetched_posts[count][0]
-            data_dictionary[str(count) + '_contents'] = fetched_posts[count][1]
-            data_dictionary[str(count) + '_date'] = fetched_posts[count][2]
-    return render_template("index.html", fetched_posts=fetched_posts, data_dictionary=data_dictionary)
+        fetch_query = 'SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username, tag.tag FROM postInfo, userPosts, userInfo, tag WHERE userPosts.postid = postInfo.postid AND userInfo.userid = userPosts.userid AND tag.tagid = postInfo.tagid ORDER BY postdate DESC'  # variable stores the sql function that needs to be executed
+        fetched_posts = database.cursor.execute(
+            fetch_query).fetchall()  # cursor executes the function and gets all results returned by the function
+
+    return render_template("index.html", fetched_posts=fetched_posts)
 
 
 @app.route('/profile')
