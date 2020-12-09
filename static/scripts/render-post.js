@@ -1,8 +1,6 @@
 var postResults = jsonPostResults;
 var commentResults = jsonCommentResults;
 var amountOfComments = commentResults.length;
-console.log(postResults);
-console.log(commentResults);
 
 var postID = postResults[0][0];
 var tagID = postResults[0][1];
