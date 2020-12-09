@@ -160,10 +160,16 @@ def render_post():
 
     database = db_scripts.Database("blog.sqlite3")
     database.cursor.execute(select_post_query, (post_id, post_id))
-    query_results = database.cursor.fetchall()
+    select_post_query_results = database.cursor.fetchall()
+
+    """ Select all the comments and the users who posted the comment for the specific post that's being searched for """
+    select_comments_query = "SELECT commentid, commentcontent, commentdate, userid, username from commentInfo, " \
+                            "userInfo WHERE commentid = (SELECT commentid from comment where postid = ?) "
+    database.cursor.execute(select_comments_query, (post_id))
+    select_comments_query_results = database.cursor.fetchall()
     database.close()
 
-    return render_template("post.html", results=query_results)  # return the page and the results variable to the page
+    return render_template("post.html", post_results=select_post_query_results, comment_results=select_comments_query_results)  # return the page and the results variable to the page
 
 
 def does_file_exist(file_to_find):
