@@ -39,7 +39,7 @@
 			</div>
             {% for i in fetched_posts %}
 			    <div class="post">
-				    <h2 class="title">{{ i[1] }}</h2>
+					<h2 class="title"><a href="http://127.0.0.1:5000/comments?id={{i[0]}}">{{ i[1] }}</a></h2>
 				    <p class="meta"><span class="date">{{ i[2] }}</span><span class="posted">Posted by <a href="#">{{ i[4] }}</a></span></p>
 				    <div style="clear: both;">&nbsp;</div>
 				    <div class="entry">
