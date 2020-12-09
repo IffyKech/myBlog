@@ -107,7 +107,7 @@ def render_index():
         database = db_scripts.Database("blog.sqlite3")  # creates a connection to the website's database
         fetch_query = 'SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username, tag.tag FROM postInfo, userPosts, userInfo, tag WHERE userPosts.postid = postInfo.postid AND userInfo.userid = userPosts.userid AND tag.tagid = postInfo.tagid ORDER BY postdate DESC'  # variable stores the sql function that needs to be executed
         fetched_posts = database.cursor.execute(fetch_query).fetchall()  # cursor executes the function and gets all results returned by the function
-        print(fetched_posts)
+
     return render_template("index.html", fetched_posts=fetched_posts)
 
 
