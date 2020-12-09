@@ -157,7 +157,7 @@ def render_post():
                         "SELECT userid from userPosts where postid = ?) "
 
     database = db_scripts.Database("blog.sqlite3")
-    database.cursor.execute(select_post_query, (post_id))
+    database.cursor.execute(select_post_query, (post_id, post_id))
     query_results = database.cursor.fetchall()
     database.close()
 
