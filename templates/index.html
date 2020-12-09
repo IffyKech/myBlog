@@ -43,7 +43,7 @@
 				    <p class="meta"><span class="date">{{ i[2] }}</span><span class="posted">Posted by <a href="#">{{ i[4] }}</a></span></p>
 				    <div style="clear: both;">&nbsp;</div>
 				    <div class="entry">
-					<p class="links">{{ i[5] }} <a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
+					<p class="links">{{ i[5] }} <a href="http://127.0.0.1:5000/comments?id={{ i[0] }}">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://127.0.0.1:5000/comments?id={{ i[0] }}">Comments</a></p>
 				    </div>
 			    </div>
             {% endfor %}
