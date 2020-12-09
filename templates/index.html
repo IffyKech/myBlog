@@ -28,6 +28,20 @@
 	<div id="page-bgtop">
 	<div id="page-bgbtm">
 		<div id="content">
+        <div id="create-post">
+            <label for = "create-post" id="create-a-post">Create A Post</label>
+            <input type = "text" id = "create-title" placeholder="Create a title...">
+            <textarea name = "creating-content" id = "create-content" rows="10" cols = "60"></textarea>
+            <form>
+                <label for = "tags">Pick a tag: </label>
+                <select name = "tags" id="tag-picker">
+                    {% for j in fetched_tags %}
+                    <option>{{ j[1] }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <input type="submit" id="create-post-button" value="Create your post!">
+        </div>
 			<div class="post">
 				<h2 class="title"><a href="#">Welcome to Indication   </a></h2>
 				<p class="meta"><span class="date">September 10, 2009</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
