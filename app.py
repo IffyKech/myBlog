@@ -142,14 +142,26 @@ def return_searched_post():
     database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
     query_results = database.cursor.fetchall()  # get the results in a list of tuples
     database.close()
-    return render_template("search.html", json_results=query_results)
+    return render_template("search.html", json_results=query_results)  # return the page and the results variable to the page
 
 
 @app.route('/comments')
 def render_post():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
-    return render_template("post.html")
+    post_id = request.args["id"]
+    """ Select the post details being searched for (by post_id) and the details of the user who created the post"""
+    select_post_query = "SELECT postInfo.postid ,postInfo.tagid, postInfo.postcontent, postInfo.title, " \
+                        "postInfo.postdate, userInfo.userid, userInfo.username FROM postInfo, userInfo WHERE " \
+                        "postInfo.postid = (SELECT postid from userPosts where postid = ?) AND userInfo.userid = (" \
+                        "SELECT userid from userPosts where postid = ?) "
+
+    database = db_scripts.Database("blog.sqlite3")
+    database.cursor.execute(select_post_query, (post_id))
+    query_results = database.cursor.fetchall()
+    database.close()
+
+    return render_template("post.html", results=query_results)  # return the page and the results variable to the page
 
 
 def does_file_exist(file_to_find):

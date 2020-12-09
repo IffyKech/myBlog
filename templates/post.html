@@ -17,6 +17,10 @@ Released   : 20090910
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Indication by TEMPLATED</title>
 	<link href="{{ url_for('static', filename='../css/style.css') }}" rel="stylesheet" type="text/css" media="screen" />
+	<script type="text/javascript">
+		var json_results = {{ results|tojson }};
+	</script>
+	<script src="{{ url_for('static', filename='../scripts/render-post.js') }}" type="text/javascript" defer></script>
 </head>
 <body>
 <div id="wrapper">
