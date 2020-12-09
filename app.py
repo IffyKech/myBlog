@@ -134,7 +134,7 @@ def render_search():
 @app.route('/search', methods=['POST'])
 def return_searched_post():
     tag_being_searched_for = request.form['s']  # get the value of the search bar input
-    select_posts_query = "SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username FROM postInfo, " \
+    select_posts_query = "SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username FROM postInfo, "\
                          "userPosts, userInfo WHERE (SELECT tag FROM tag) LIKE ? AND userPosts.postid = " \
                          "postInfo.postid AND userInfo.userid = userPosts.userid"  # select all posts that
     # matched the tag being searched for
@@ -142,14 +142,34 @@ def return_searched_post():
     database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
     query_results = database.cursor.fetchall()  # get the results in a list of tuples
     database.close()
-    return render_template("search.html", json_results=query_results)
+    return render_template("search.html", json_results=query_results)  # return the page and the results variable to
+    # the page
 
 
 @app.route('/comments')
 def render_post():
     if 'username' not in session:  # if there hasn't been a session created (no login yet)
         return redirect(url_for('render_login'))  # redirect the user to login
-    return render_template("post.html")
+    post_id = request.args["id"]
+    """ Select the post details being searched for (by post_id) and the details of the user who created the post"""
+    select_post_query = "SELECT postInfo.postid ,postInfo.tagid, tag.tag, postInfo.postcontent, postInfo.title, " \
+                        "postInfo.postdate, userInfo.userid, userInfo.username FROM postInfo, userInfo, " \
+                        "tag WHERE postInfo.postid = (SELECT postid from userPosts where postid = ?) AND " \
+                        "userInfo.userid = (SELECT userid from userPosts where postid = ?) AND tag.tagid = " \
+                        "postInfo.tagid "
+
+    database = db_scripts.Database("blog.sqlite3")
+    database.cursor.execute(select_post_query, (post_id, post_id))
+    select_post_query_results = database.cursor.fetchall()
+
+    """ Select all the comments and the users who posted the comment for the specific post that's being searched for """
+    select_comments_query = "SELECT commentid, commentcontent, commentdate, userid, username from commentInfo, " \
+                            "userInfo WHERE commentid = (SELECT commentid from comment where postid = ?) "
+    database.cursor.execute(select_comments_query, (post_id))
+    select_comments_query_results = database.cursor.fetchall()
+    database.close()
+
+    return render_template("post.html", post_results=select_post_query_results, comment_results=select_comments_query_results)  # return the page and the results variable to the page
 
 
 def does_file_exist(file_to_find):
