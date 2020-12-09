@@ -32,7 +32,7 @@ entryDivEle.className = "entry";
 
 var postContentEle = document.createElement("p");
 postContentEle.style.color = "black";
-postContentEle.style.fontSize = "30px";
+postContentEle.style.fontSize = "15px";
 postContentEle.innerHTML = postContent;
 
 var linksParagraphEle = document.createElement("p");
