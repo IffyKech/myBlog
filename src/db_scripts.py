@@ -52,6 +52,10 @@ def create_blog_database():
     for query in queries:
         database.execute_query(query)
 
+    insert_tags_query = """INSERT INTO tag(tag) VALUES("Sports"), ("Anime"), ("Gaming"), ("Television"),
+     ("Programming"), ("Reddit"), ("Twitter")"""
+    database.execute_query(insert_tags_query)
+
     database.close()
 
 
