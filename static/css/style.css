@@ -415,6 +415,11 @@ input:hover,
   opacity: 1;
 }
 
+#create-content {
+	min-width: 100%;
+	max-width: 100%;
+}
+
 /* add appropriate colors to fb, twitter and google buttons */
 .fb {
   background-color: #3B5998;
