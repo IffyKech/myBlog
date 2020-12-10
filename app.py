@@ -255,8 +255,8 @@ def render_post():
     select_post_query_results = database.cursor.fetchall()
 
     """ Select all the comments and the users who posted the comment for the specific post that's being searched for """
-    select_comments_query = "SELECT commentid, commentcontent, commentdate, userid, username from commentInfo, " \
-                            "userInfo WHERE commentid = (SELECT commentid from comment where postid = ?) "
+    select_comments_query = "select commentid, commentcontent, commentdate from commentInfo" \
+                            " where commentid IN (select commentid from comment where postid=?)"
     database.cursor.execute(select_comments_query, (post_id))
     select_comments_query_results = database.cursor.fetchall()
     database.close()
