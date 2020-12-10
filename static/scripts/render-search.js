@@ -1,7 +1,8 @@
 var results = json_results;
+console.log(results);
 var amountOfResults = results.length;
 var contentDiv = document.getElementById("content");
-if (amountOfResults > 1) {  // if the query returned results
+if (amountOfResults > 0) {  // if the query returned results
     /*
 Repeat the process of creating html for the posts, for as many posts as there are
  */
