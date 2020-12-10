@@ -153,7 +153,7 @@ def create_post():
     title = request.args["title"]
     content = request.args["content"]
     tag = request.args["tag"]
-    post_date = datetime.datetime.today().strftime('%d-%m-%Y')
+    post_date = datetime.datetime.today().strftime('%d/%m/%Y')
     
     """Get the current user's userID"""
     author_id_query = "SELECT userid FROM userInfo WHERE username = ?"
@@ -177,6 +177,9 @@ def create_post():
     """Insert to the post+user link table"""
     insert_link_query = 'INSERT INTO userPosts(userid,postid) VALUES (?,?)'
     database.cursor.execute(insert_link_query, (author_id, post_id))
+
+    database.connection.commit()  # save the changes
+    database.close()
     
     return Response("{'a':'b'}", status=200, mimetype='application/json')  # return a valid response
 
