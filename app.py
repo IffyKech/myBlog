@@ -10,9 +10,6 @@ app.secret_key = b'\x83r\xb6GA:\xa3k"\xf7\x8e\xf3j\xaf{\xfb'  # secret key for u
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1  # set cache refresh to every 1 second
 
 
-# TODO: plan out sessions so that each page redirects to login page if session doesn't exist
-
-
 @app.route('/')
 def login_redirect():
     """
@@ -105,13 +102,16 @@ def render_index():
         return redirect(url_for('render_login'))  # redirect the user to login
     else:
         database = db_scripts.Database("blog.sqlite3")  # creates a connection to the website's database
-        fetch_query = 'SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username, tag.tag FROM postInfo, userPosts, userInfo, tag WHERE userPosts.postid = postInfo.postid AND userInfo.userid = userPosts.userid AND tag.tagid = postInfo.tagid ORDER BY postdate DESC'  # variable stores the sql function that needs to be executed
+        fetch_query = 'SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username, tag.tag FROM ' \
+                      'postInfo, userPosts, userInfo, tag WHERE userPosts.postid = postInfo.postid AND ' \
+                      'userInfo.userid = userPosts.userid AND tag.tagid = postInfo.tagid ORDER BY postdate DESC'  # 
+        # variable stores the sql function that needs to be executed 
         fetched_posts = database.cursor.execute(
             fetch_query).fetchall()  # cursor executes the function and gets all results returned by the function
     fetch_query = 'SELECT * FROM tag ORDER BY tagid DESC '
     fetched_tags = database.cursor.execute(fetch_query)
 
-    return render_template("index.html", fetched_posts=fetched_posts,fetched_tags=fetched_tags)
+    return render_template("index.html", fetched_posts=fetched_posts, fetched_tags=fetched_tags)
 
 
 @app.route('/profile')
@@ -145,6 +145,40 @@ def change_password():
     else:
         database.close()
         abort(500)
+
+
+@app.route('/create', methods=['POST'])
+def create_post():
+    database = db_scripts.Database("blog.sqlite3")
+    title = request.args["title"]
+    content = request.args["content"]
+    tag = request.args["tag"]
+    post_date = datetime.datetime.today().strftime('%d-%m-%Y')
+    
+    """Get the current user's userID"""
+    author_id_query = "SELECT userid FROM userInfo WHERE username = ?"
+    database.cursor.execute(author_id_query, (session['username'],))
+    author_id = database.cursor.fetchone()[0]
+    
+    """Get the tag's id"""
+    tag_id_query = 'SELECT tag.tagid FROM tag WHERE tag = ?'
+    database.cursor.execute(tag_id_query, (tag,))
+    tag_id = database.cursor.fetchone()[0]
+    
+    """Create the new post with all the values"""
+    insert_query = 'INSERT INTO postInfo(title, postcontent, postdate, tagid) VALUES (?,?,?,?)'
+    database.cursor.execute(insert_query, (title, content, post_date, tag_id))
+    
+    """Get the newly created post's postID"""
+    post_id_query = 'SELECT postid FROM postInfo WHERE title = (?) ORDER BY postid DESC'
+    database.cursor.execute(post_id_query, (title,))
+    post_id = database.cursor.fetchone()[0]
+    
+    """Insert to the post+user link table"""
+    insert_link_query = 'INSERT INTO userPosts(userid,postid) VALUES (?,?)'
+    database.cursor.execute(insert_link_query, (author_id, post_id))
+    
+    return Response("{'a':'b'}", status=200, mimetype='application/json')  # return a valid response
 
 
 @app.route('/search')
@@ -192,7 +226,9 @@ def render_post():
     select_comments_query_results = database.cursor.fetchall()
     database.close()
 
-    return render_template("post.html", post_results=select_post_query_results, comment_results=select_comments_query_results)  # return the page and the results variable to the page
+    # return the page and the results variable to the page
+    return render_template("post.html", post_results=select_post_query_results,
+                           comment_results=select_comments_query_results)
 
 
 def does_file_exist(file_to_find):
