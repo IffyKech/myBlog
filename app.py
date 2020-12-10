@@ -147,7 +147,7 @@ def change_password():
         abort(500)
 
 
-@app.route('/create', methods=['POST'])
+@app.route('/create/post', methods=['POST'])
 def create_post():
     database = db_scripts.Database("blog.sqlite3")
     title = request.args["title"]
@@ -181,6 +181,38 @@ def create_post():
     database.connection.commit()  # save the changes
     database.close()
     
+    return Response("{'a':'b'}", status=200, mimetype='application/json')  # return a valid response
+
+
+@app.route('/create/comment', methods=['POST'])
+def create_comment():
+    response = request.get_json()
+    comment = response["comment"]
+    post_id = response["postid"]
+    current_date = datetime.datetime.today().strftime('%d/%m/%Y')
+    database = db_scripts.Database("blog.sqlite3")
+
+    """GET THE USER ID OF THE CURRENT USER"""
+    user_id_query = "SELECT userid FROM userInfo WHERE username=?"
+    database.cursor.execute(user_id_query, (session["username"],))
+    user_id = database.cursor.fetchone()[0]
+
+    """CREATE THE NEW COMMENT ROW"""
+    create_comment_query = "INSERT INTO commentInfo(commentcontent, commentdate) VALUES(?, ?)"
+    database.cursor.execute(create_comment_query, (comment, current_date))
+
+    """GET THE NEWLY CREATED COMMENT'S commentid"""
+    comment_id_query = "SELECT commentid FROM commentInfo WHERE commentcontent = (?) ORDER BY commentid DESC"
+    database.cursor.execute(comment_id_query, (comment,))
+    comment_id = database.cursor.fetchone()[0]
+
+    """CREATE A NEW LINK BETWEEN THE POST AND THE NEWLY MADE COMMENT"""
+    comment_link_query = "INSERT INTO comment(commentid, postid, userid) VALUES(?, ?, ?)"
+    database.cursor.execute(comment_link_query, (comment_id, post_id, user_id))
+
+    database.connection.commit()  # save the changes
+    database.close()
+
     return Response("{'a':'b'}", status=200, mimetype='application/json')  # return a valid response
 
 
