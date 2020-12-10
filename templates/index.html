@@ -26,6 +26,22 @@
 	<!-- end #menu -->
 	<div id="page">
 	<div id="page-bgtop">
+		<div id="sidebar">
+			<ul>
+				<li>
+					<div id="search" >
+					<form method="POST" action="http://127.0.0.1:5000/search">
+						<div>
+							<h1>Search</h1>
+							<input type="text" name="s" id="search-text" value="" />
+							<input type="submit" id="search-submit" value="GO" />
+						</div>
+					</form>
+					</div>
+					
+			</ul>
+		</div>
+		<!-- end #sidebar -->
 	<div id="page-bgbtm">
 		<div id="content">
         <div id="create-post">
@@ -63,22 +79,6 @@
             {% endfor %}
 
 		<!-- end #content -->
-		<div id="sidebar">
-			<ul>
-				<li>
-					<div id="search" >
-					<form method="POST" action="http://127.0.0.1:5000/search">
-						<div>
-							<h1>Search</h1>
-							<input type="text" name="s" id="search-text" value="" />
-							<input type="submit" id="search-submit" value="GO" />
-						</div>
-					</form>
-					</div>
-					
-			</ul>
-		</div>
-		<!-- end #sidebar -->
 		<div style="clear: both;">&nbsp;</div>
 	</div>
 	</div>
