@@ -6,7 +6,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>MyBlog - Home</title>
 	<link href="{{ url_for('static', filename='../css/style.css') }}" rel="stylesheet" type="text/css" media="screen" />
-    <link href="{{ url_for('static', filename='../scripts/homepage.js') }}"  type="text/javascript"/>
+	<script src="{{ url_for('static', filename='../scripts/create-post.js') }}" type="text/javascript" defer></script>
 </head>
 <body>
 <div id="wrapper">
@@ -36,11 +36,11 @@
                 <label for = "tags">Pick a tag: </label>
                 <select name = "tags" id="tag-picker">
                     {% for j in fetched_tags %}
-                    <option>{{ j[1] }}</option>
+                    <option id="tag">{{ j[1] }}</option>
                     {% endfor %}
                 </select>
             </form>
-            <input type="submit" id="create-post-button" value="Create your post!">
+			<button type="button" id="create-post-button" >Create Post!</button>
         </div>
 			<div class="post">
 				<h2 class="title"><a href="#">Welcome to Indication   </a></h2>
