@@ -226,9 +226,9 @@ def render_search():
 @app.route('/search', methods=['POST'])
 def return_searched_post():
     tag_being_searched_for = request.form['s']  # get the value of the search bar input
-    select_posts_query = "SELECT postInfo.postid, title, postdate, userPosts.userid, userInfo.username FROM postInfo, "\
-                         "userPosts, userInfo WHERE (SELECT tag FROM tag) LIKE ? AND userPosts.postid = " \
-                         "postInfo.postid AND userInfo.userid = userPosts.userid"  # select all posts that
+    select_posts_query = "select postid, title, postdate, userid, username " \
+                         "from postInfo, userInfo " \
+                         "where tagid = (SELECT tagid from tag where tag like ?) and postid in (select postid from userPosts where userPosts.userid = userInfo.userid)"  # select all posts that
     # matched the tag being searched for
     database = db_scripts.Database("blog.sqlite3")  # initialize the database connection
     database.cursor.execute(select_posts_query, (f'%{tag_being_searched_for}%',))  # execute the query with the input
