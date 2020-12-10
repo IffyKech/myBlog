@@ -2,6 +2,7 @@ var postResults = jsonPostResults;
 var commentResults = jsonCommentResults;
 var amountOfComments = commentResults.length;
 
+/* RENDER POST */
 var postID = postResults[0][0];
 var tagID = postResults[0][1];
 var tagName = postResults[0][2];
@@ -48,21 +49,21 @@ postDivEle.appendChild(entryDivEle);
 entryDivEle.appendChild(postContentEle);
 entryDivEle.appendChild(linksParagraphEle);
 
+
+/* RENDER COMMENTS */
 if (amountOfComments > 0) { // if there were comments found
     for (let repeat = 0; repeat < amountOfComments; repeat++) {
 
         var commentID = commentResults[repeat][0];
         var commentContent = commentResults[repeat][1];
         var commentDate = commentResults[repeat][2];
-        var commentCreatorID = commentResults[repeat][3];
-        var commentCreatorName = commentResults[repeat][4];
 
         var commentPostDivEle = document.createElement("div");
         commentPostDivEle.className = "post";
 
         var commentDateEle = document.createElement("p");
         commentDateEle.className = "meta";
-        commentDateEle.innerHTML = `<span class="date">${commentDate}</span><span class="posted">Comment posted by: ${commentCreatorName}</span>`
+        commentDateEle.innerHTML = `<span class="date"></span><span class="posted">Comment posted on: ${commentDate}</span>`
 
         var commentEntryDiv = document.createElement("div");
         commentEntryDiv.className = "entry";
