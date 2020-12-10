@@ -22,6 +22,7 @@ Released   : 20090910
 		var jsonCommentResults = {{ comment_results|tojson }};
 	</script>
 	<script src="{{ url_for('static', filename='../scripts/render-post.js') }}" type="text/javascript" defer></script>
+	<script src="{{ url_for('static', filename='../scripts/post-comment.js') }}" type="text/javascript" defer></script>
 </head>
 <body>
 <div id="wrapper">
@@ -43,7 +44,19 @@ Released   : 20090910
 	    <div id="page-bgtop">
 	        <div id="page-bgbtm">
 		        <div id="content">
-			
+					<div>
+						<div class="comment">
+							<h3>Comment:</h3>
+							<form  id="createComment">
+								<div>
+									<textarea name="message" id="comment-content" rows="3" cols="40" maxlength="150" style="max-width: 100%; min-width: 100%"></textarea>
+									<br>
+									<button type="button" id="comment-submit">Submit</button>
+								</div>
+							</form>
+						</div>
+						<div style="clear: both;">&nbsp;</div>
+					</div
 			    </div>
 		    <div style="clear: both;">&nbsp;</div>
 		</div>

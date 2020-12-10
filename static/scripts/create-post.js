@@ -17,7 +17,7 @@ function createPost() {
                 alert("Post Created!\nPlease refresh the page to view the post.");
             }
         }
-        xmlhttp.open("POST", "http://127.0.0.1:5000/create?title=" +title.toString()+ "&content=" +content.toString()+ "&tag="+tag.toString(), true);
+        xmlhttp.open("POST", "http://127.0.0.1:5000/create/post?title=" +title.toString()+ "&content=" +content.toString()+ "&tag="+tag.toString(), true);
         xmlhttp.send();
     }
 }
