@@ -1,6 +1,10 @@
 function postComment() {
     var comment = document.getElementById("comment-content").value;
     var xmlhttp = new XMLHttpRequest();
+    
+    if (comment.length < 1){ // if a value has not been entered in the comment field
+        alert("Please enter a value in the comment field.");  // inform the user
+    }
 
     xmlhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
