@@ -1,14 +1,16 @@
+"""Import module for Database Connection class"""
 import sqlite3
 
 
 class Database:
-    def __init__(self, name):
+    """Database class Constructor"""
+    def __init__(self, name):  # required attribute: name (for the name of the database file)
         self.name = name
         self.connection = sqlite3.connect(self.name)
         self.cursor = self.connection.cursor()
         self.connection_established = True
 
-    def close(self):
+    def close(self):  # method to close the database connection
         if self.connection_established:
             self.connection.close()
             self.connection_established = False
@@ -29,6 +31,8 @@ class Database:
 def create_blog_database():
     """
     Create the blog's database, if it does not already exist.
+    Creates all the necessary tables for the website to function (users,tag,post,comment/commentinfo, userpost)
+    Then inserts the predefined tags to the tag table (Sports, Anime, Gaming e.t.c.)
     :return:
     """
     database = Database("blog.sqlite3")
@@ -64,5 +68,5 @@ def main():
     print("Database Created")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # only runs if the module file (db_scripts) is run directly
     main()
