@@ -1,5 +1,4 @@
 var results = json_results;
-console.log(results);
 var amountOfResults = results.length;
 var contentDiv = document.getElementById("content");
 if (amountOfResults > 0) {  // if the query returned results
@@ -60,6 +59,7 @@ Repeat the process of creating html for the posts, for as many posts as there ar
 }
 
 else {  // if the query didn't return any results
+    /* Display red message to say no posts found */
     var errorMessage = document.createElement("h1");
     errorMessage.style.color = "red";
     errorMessage.innerHTML = "No Posts Found";
